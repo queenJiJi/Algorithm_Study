@@ -1,11 +1,16 @@
+v = [[1, 4], [3, 4], [3, 10]]
+v1 = [[1, 1], [2, 2], [1, 2]]
 
-# 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트를 만들기
-graph = [[] for _ in range(5)]
+x = []
+y = []
 
-# 모든 간선 정보를 입력받기
-for _ in range(4):
-    a, b, c = map(int, input().split())
-    # a번노드에서 b번노드로 가는 비용이 c라는 의미
-    graph[a].append((b, c))
-
-print(graph)
+for i in v:
+    if i[0] in x:
+        x.remove(i[0])
+    else:
+        x.append(i[0])
+    if i[1] in y:
+        y.remove(i[1])
+    else:
+        y.append(i[1])
+print([*x, *y])
