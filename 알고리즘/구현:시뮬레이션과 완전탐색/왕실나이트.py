@@ -1,27 +1,31 @@
-# 아이디어
-#   그냥 요구사항대로 따라가면 됨
-#  나이트의 8가지 경로를 하나씩 확인하며 각 위치로 이동이 가능한지 확인
-  # 리스트를 이용하여 8가지 방향에 대한 방향 벡터를 정의
-  # 수평으로 두칸 이동 한 뒤에 수직으로 한칸 이동
-    # 오른쪽 2칸 - 위로 1칸 
-    # 오른쪽 2칸 - 아래로 1칸
-    # 왼쪽 2칸 - 위로 1칸
-    # 왼쪽 2칸 - 아래로 1칸
-  # 수직으로 두칸 이동 한 뒤에 수평으로 한칸 이동
-    # 아래로 2칸 - 오른쪽 1칸
-    # 아래로 2칸 - 왼쪽 1칸
-    # 위로 2칸 - 오른쪽 1칸
-    # 위로 2칸 - 왼쪽 1칸
-s=input()
-x,y = int(ord(s[0]))-int(ord('a'))+1,int(s[1])
 
-# 가능한 방향 경우의 수
-dir = [(2,1),(2,-1),(-2,1),(-2,1),(1,-2),(-1,-2),(1,2),(-1,2)]
-count =0
-for i in dir:
-  nx = x+i[0]
-  ny = y+i[1]
+start = input()
+count = 0  # 경우의 수
+# commands = [
+#     ['r', 'r', 'u'], ['r', 'r', 'd'], ['l', 'l', 'u'], ['l', 'l', 'd'],
+#     ['u', 'u', 'l'], ['u', 'u', 'r'], ['d', 'd', 'l'], ['d', 'd', 'r']]
+r, c = int(start[1]), ord(start[0])-ord('a')+1,  # 시작점
+# for i in range(8):
+#     for j in commands[i]:
+#         if j == 'r':
+#             c = c + 1
+#         if j == 'l':
+#             c = c - 1
+#         if j == 'u':
+#             r = r - 1
+#         if j == 'd':
+#             r = r + 1
 
-  if nx>=1 and nx<=8 and ny>=1 and ny<=8:
-    count+=1
+#     if r > 0 and c > 0 and r < 9 and c < 9:
+#         count += 1
+#     r, c = int(start[1]), ord(start[0])-ord('a')+1
+# print(count)
+
+# 개선
+commands = [(1, 2), (1, -2), (-1, 2), (-1, -2),
+            (2, 1), (2, -1), (-2, 1), (-2, -1)]
+for i in commands:
+    nr, nc = r+i[0], c+i[1]
+    if nr > 0 and nc > 0 and nr < 9 and nc < 9:
+        count += 1
 print(count)
