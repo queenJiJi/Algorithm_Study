@@ -4,7 +4,14 @@
 # 상,하,좌,우로 연결된 모든 노드로의 거리가 1로 동일
 # 따라서 (1,1)지점부터 bfs를 수행하여 모든 노드의 최단 거리 값을 기록하면 해결 가능
 
+# 괴물 있는 부분 : 0  없는 부분: 1, 미로를 탈출하기 위한 '최소 칸의 개수'
+# (1,1)에서 (n,m)으로 갈 수 있는 최단 거리 구하라는 것
+
+# 프로그래머스 미로탈출(LV2)도 풀어보기
+#  https://he-ya.tistory.com/105
+import sys
 from collections import deque
+sys.stdin = open('알고리즘/DFS-BFS/input/미로탈출문제.txt', 'r')
 
 # n,m을 공백을 기준으로 구분하여 입력받기
 n, m = map(int, input().split())
@@ -13,6 +20,7 @@ n, m = map(int, input().split())
 graph = []
 for _ in range(n):
     graph.append(list(map(int, input())))
+# print(graph)
 
 # 이동할 네가지 방향 정의(상,하,좌,우)
 dx = [-1, 1, 0, 0]
@@ -48,5 +56,3 @@ def bfs(x, y):
 
 
 print(bfs(0, 0))
-
-# print(graph)
