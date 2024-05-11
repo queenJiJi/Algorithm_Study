@@ -2,7 +2,8 @@
 
 # from itertools import permutations,combinations
 
-nums = [1,2,3]
+# nums = [1,2,3]
+nums= [[4,3],[2,2],[2,2]]
 # nums = [0,1]
 # nums = [1]
 
