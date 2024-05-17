@@ -1,23 +1,22 @@
 def solution(s):
-  stack = []
+  stack =[]
 
   for i in s:
-    if i == '(':
+    if i=='(':
       stack.append(')')
-    elif i == '[':
+    elif i=='[':
       stack.append(']')
     elif i == '{':
       stack.append('}')
-    elif stack and i == stack[-1]:
+    elif stack and stack[-1] == i:
       stack.pop()
     else:
       return False
-  return True if not stack else False
-
-
+  return False if stack else True
 
 
 print(solution('()'))
 print(solution('()[]{}'))
 print(solution('(]'))
 print(solution(']'))
+
