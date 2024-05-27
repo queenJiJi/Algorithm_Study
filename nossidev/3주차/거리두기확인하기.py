@@ -3,13 +3,13 @@ from collections import  deque
 def bfs(r,c,place):
     visited=[[False]*5 for _ in range(5)]
     q=deque()
-    q.append((r,c,1))
+    q.append((r,c,0))
     visited[r][c] = True
     
     while q: 
         cur_r,cur_c,cur_dist = q.popleft()
         
-        if cur_dist > 2: # 검사하는 거리가 2 이상이면 멈추기
+        if cur_dist > 1: # 검사하는 거리가 2 이상이면 멈추기
             break
             
         for dr,dc in [[-1,0],[1,0],[0,-1],[0,1]]: # 멘해튼 거리를 보는 것이니 대각선은 미포함
