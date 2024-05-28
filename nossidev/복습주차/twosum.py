@@ -1,9 +1,9 @@
 def solution(nums,target):
   # 완전탐색 (2400ms)
-  for i in range(len(nums)):
-    for j in range(i+1, len(nums)):
-      if nums[i]+nums[j] == target:
-        return [i,j]
+  # for i in range(len(nums)):
+  #   for j in range(i+1, len(nums)):
+  #     if nums[i]+nums[j] == target:
+  #       return [i,j]
       
 
   # 투포인터 (42ms)
@@ -18,6 +18,7 @@ def solution(nums,target):
     elif target<mean:
       r-=1
     else:
+      print('l',l,'r',r)
       return [nums[l][0], nums[r][0]]
   return False
 
