@@ -5,7 +5,7 @@ sys.stdin =open('nossidev/복습주차/input/연구소.txt','r')
 # 0: 빈칸, 1: 벽, 2: 바이러스 
 # 벽 3개 
 # 최대 안전영역의 크기 
-   
+
 def solution():
 #0은 빈 칸, 1은 벽, 2는 바이러스
   n,m = map(int,input().split())
