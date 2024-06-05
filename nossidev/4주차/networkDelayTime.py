@@ -19,8 +19,8 @@ def solution(times,n,k):
     if cur_v not in costs:
       costs[cur_v] = cur_cost
       for cost, next_v in graph[cur_v]:
-        next_cost = cur_cost + cost
-        heapq.heappush(pq,(next_cost,next_v))
+          next_cost = cur_cost + cost
+          heapq.heappush(pq,(next_cost,next_v))
 
   #  모든 노드를 다 돌았는지 확인
   for node in range(1,n+1):
