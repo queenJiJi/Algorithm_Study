@@ -33,7 +33,7 @@ def dijkstra_list(graph,start_node,dest,n):
       next_dist = cur_dist + cost # 현재노드까지의 거리 저장된것 + 다음 노드까지의 거리
       if next_dist < distance[next_node]: # 다음 노드까지의 계산된 거리가 이미 저장되어있던 최소거리보다 작으면 
         distance[next_node] = next_dist # 새로운 최소거리비용으로 업데이트 
-      heapq.heappush(pq, (next_dist,next_node)) # 큐에 연결된 다음 노드들 넣어주기
+        heapq.heappush(pq, (next_dist,next_node)) # 큐에 연결된 다음 노드들 넣어주기
   print(distance)
   return distance[dest] # 목적지까지의 저장된 최소비용 반환
 

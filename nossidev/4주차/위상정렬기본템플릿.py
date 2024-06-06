@@ -11,6 +11,8 @@ def topological_sort(node_num, prerequisites):
         graph[u].append(v)
         # indegree을 기록한다.
         indegree[v] += 1
+    
+    print(graph)
 
     # 위상정렬을 수행한다.
     # indegree == 0 인 정점부터 탐색이 시작된다.
@@ -32,3 +34,5 @@ def topological_sort(node_num, prerequisites):
     return visited
 
 print(topological_sort(8,[[1,7],[1,5],[4,1],[6,1],[2,1],[0,3],[4,3],[0,7]]))
+print()
+print(topological_sort(4,[[1,0], [2,0],[3,1],[3,2]]))
