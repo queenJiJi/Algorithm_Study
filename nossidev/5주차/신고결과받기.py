@@ -5,7 +5,7 @@ import collections
 #   # 신고내역을 저장할 딕셔너리
 #   reported_by = collections.defaultdict(set)
 
-#   # 신고내역을 처리
+#  # 신고내역을 처리
 #   for reporting in report:
 #     reporter, reported = reporting.split()
 #     if reported not in reported_by[reported]: # 중복제거
