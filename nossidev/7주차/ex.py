@@ -1,38 +1,30 @@
-from collections import defaultdict, deque
+def solution(n, escalator):
+    # DP 테이블 초기화: 큰 값으로 초기화
+    dp = [[float('inf')] * 3 for _ in range(n)]
+    
+    # 첫 행 초기화
+    if escalator[0][1] == 0:
+        dp[0][1] = 0  # 시작 위치
+    if escalator[0][0] == 0:
+        dp[0][0] = 1
+    if escalator[0][2] == 0:
+        dp[0][2] = 1
 
+    # DP 테이블 채우기
+    for i in range(1, n):
+        for j in range(3):
+            if escalator[i][j] == 0:
+                if escalator[i-1][j] == 0:
+                    dp[i][j] = min(dp[i][j], dp[i-1][j])
+                if j > 0 and escalator[i-1][j-1] == 0:
+                    dp[i][j] = min(dp[i][j], dp[i-1][j-1] + 1)
+                if j < 2 and escalator[i-1][j+1] == 0:
+                    dp[i][j] = min(dp[i][j], dp[i-1][j+1] + 1)
+    return dp
+    # 마지막 행의 최소값 반환
+    return min(dp[-1])
 
-def bfs_and_node_count(del_line, n, wire_dict):  # bfs 수행과 연결된 노드수 구하기
-    count = 1  # 연결된 노드 수
-    visited = [False] * (n + 1)  # 방문여부 체크
-    visited[del_line[0]] = True  # 시작 노드 방문 처리
-    queue = deque([del_line[0]])
-
-    while queue:  # bfs 수행
-        curr = queue.popleft()
-        for i in wire_dict[curr]:  # curr 노드와 연결된 노드에 대해서
-            if visited[i] or i == del_line[1]:  # 방문했거나 끊어지는 부분의 노드인 경우 패스
-                continue
-            count += 1
-            queue.append(i)
-            visited[i] = True
-    return count
-
-
-def solution(n, wires):
-    answer = 1000
-    data = defaultdict(set)  # 각 노드별 연결된 노드 정보
-    for a, b in wires:
-        data[a].add(b)
-        data[b].add(a)
-
-    for w in wires:
-        # 해당 와이어를 끊었을 때 한쪽 영역의 노드 수 구하기
-        temp = bfs_and_node_count(w, n, data)
-
-        # 기존 answer와 현재 해당하는 와이어를 끊었을 때 노드 차이 비교해서 최솟값으로 업데이트
-        answer = min(answer, abs(n - temp - temp))
-    return answer
-
-print(solution(9,[[1,3],[2,3],[3,4],[4,5],[4,6],[4,7],[7,8],[7,9]]))
-print(solution(4,[[1,2],[2,3],[3,4]]))
-print(solution(7,[[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
+# 예제 테스트
+print(solution(8, [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 0], [0, 1, 0], [0, 1, 1], [0, 0, 0], [0, 0, 1]]))  # 예상 답: 3
+print(solution(4, [[0, 1, 0], [1, 0, 1], [1, 0, 1], [0, 0, 1]]))  # 예상 답: 2
+print(solution(5, [[1, 0, 1], [0, 0, 0], [0, 0, 0], [1, 0, 0], [1, 1, 0]]))  # 예상 답: 1
