@@ -21,6 +21,7 @@ def solution(n, paths, gates, summits):
         cur_intensity, cur_v = heapq.heappop(pq)
         
         if cur_v in summit_set or cur_intensity > intense[cur_v]:
+            print('hi')
             continue
             
         for intensity, next_v  in graph[cur_v]:
@@ -28,7 +29,7 @@ def solution(n, paths, gates, summits):
             if next_intensity < intense[next_v]:
                 intense[next_v] = next_intensity
                 heapq.heappush(pq,(next_intensity, next_v))
-                
+
     answer = [0,float('inf')]
     for summit in summits:
         if intense[summit] < answer[1]:
