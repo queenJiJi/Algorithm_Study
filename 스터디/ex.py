@@ -1,17 +1,25 @@
-arr1 = [(4, 0.5), (3, 0.5), (2, 0.42857142857142855), (1, 0.125), (5, 0.0)]
-arr2 = [(4, 1.0), (3, 0.0), (2, 0.0), (1, 0.0)]
+from collections import defaultdict
 
-# Custom sort function
-def custom_sort(arr):
-    # Sort by x2 in descending order and then by x1 in ascending order
-    return sorted(arr, key=lambda x: (-x[1], x[0]))
+def solution(genre_play_dict):
+    # Step 1: 각 장르별로 총 재생 횟수를 계산합니다.
+    total_plays = {genre: sum(play for _, play in songs) for genre, songs in genre_play_dict.items()}
+    print(total_plays)
+    # Step 2: 장르를 총 재생 횟수가 많은 순서대로 정렬합니다.
+    sorted_genres = sorted(total_plays.keys(), key=lambda genre: total_plays[genre], reverse=True)
+    print(sorted_genres)
+    result = []
+    # Step 3: 각 장르별로 노래를 재생 횟수가 많은 순서대로 정렬합니다.
+    for genre in sorted_genres:
+        sorted_songs = sorted(genre_play_dict[genre], key=lambda x: (-x[1], x[0]))
+        # Step 4: 각 장르별로 상위 두 개의 노래를 선택합니다.
+        result.extend(song[0] for song in sorted_songs[:2])
 
-sorted_arr1 = custom_sort(arr1)
-sorted_arr2 = custom_sort(arr2)
+    return result
 
-# Extract only the x1 values
-result_arr1 = [x[0] for x in sorted_arr1]
-result_arr2 = [x[0] for x in sorted_arr2]
+# 예제 사용
+genre_play_dict = defaultdict(list, {
+    'classic': [(0, 500), (2, 150), (3, 800)],
+    'pop': [(1, 600), (4, 2500)]
+})
 
-print("Sorted arr1:", result_arr1)
-print("Sorted arr2:", result_arr2)
+print(solution(genre_play_dict))  # 결과는 [4, 1, 3, 0]이어야 합니다.
