@@ -1,25 +1,61 @@
-from collections import defaultdict
+from collections import deque
+import sys
 
-def solution(genre_play_dict):
-    # Step 1: 각 장르별로 총 재생 횟수를 계산합니다.
-    total_plays = {genre: sum(play for _, play in songs) for genre, songs in genre_play_dict.items()}
-    print(total_plays)
-    # Step 2: 장르를 총 재생 횟수가 많은 순서대로 정렬합니다.
-    sorted_genres = sorted(total_plays.keys(), key=lambda genre: total_plays[genre], reverse=True)
-    print(sorted_genres)
-    result = []
-    # Step 3: 각 장르별로 노래를 재생 횟수가 많은 순서대로 정렬합니다.
-    for genre in sorted_genres:
-        sorted_songs = sorted(genre_play_dict[genre], key=lambda x: (-x[1], x[0]))
-        # Step 4: 각 장르별로 상위 두 개의 노래를 선택합니다.
-        result.extend(song[0] for song in sorted_songs[:2])
+N= int(input())
+board=[list(map(int,sys.stdin.readline().strip().split())) for _ in range(N)]
+ans = 0
+size=2 # 아기상어의 초기 크기
+ans, cnt = 0,0 # 최소거리, 물고기를 잡아먹은 수 
+locx,locy= 0,0 # 아기상어의 위치
 
-    return result
+def bfs(r,c, size):
+    q=deque()
+    visited = [[-1 for _ in range(N)] for _ in range(N)] # 방문처리 겸 방문거리 업데이트
+    cases = [] # 먹을 수 있는 물고기들 
+    q.append([r,c])
 
-# 예제 사용
-genre_play_dict = defaultdict(list, {
-    'classic': [(0, 500), (2, 150), (3, 800)],
-    'pop': [(1, 600), (4, 2500)]
-})
+    visited[r][c]=0 # 현 위치 방문 처리
 
-print(solution(genre_play_dict))  # 결과는 [4, 1, 3, 0]이어야 합니다.
+    while q:
+        cur_r,cur_c=q.popleft()
+
+        for dr,dc in [[-1,0],[0,1],[0,-1],[1,0]]:
+            nr,nc =dr+cur_r, dc+cur_c
+            if 0<=nr<N and 0<=nc<N and visited[nr][nc]==-1:
+                if board[nr][nc] <= size: # 지나갈수있을 때 
+                    q.append([nr,nc])
+                    visited[nr][nc] = visited[cur_r][cur_c]+1 # 사이즈를 함께 저장 
+
+                    if board[nr][nc]<size and board[nr][nc]!=0: # 먹을 수 있을 때
+                        cases.append([nr,nc,visited[nr][nc]])
+    return cases
+
+# 아기상어의 현재위치
+for r in range(N):
+    for c in range(N):
+        if board[r][c] == 9:
+            locx,locy= r,c
+            board[r][c] = 0 # 거기서부터 다시 움직이니까 0으로 초기화
+# 물고기를 다 먹을때까지 무한 루프
+while True:
+    cases = bfs(locx,locy,size)
+
+    # 먹을 수 있는 물고기가 없을 경우 종료
+    if len(cases)==0:
+        break
+
+    # 먹을 수 있는 물고기가 있는 상태라면 위쪽부터->왼쪽 부터 = 행->열 정렬
+    cases.sort(key=lambda x: (x[2],x[1],x[0])) #x[2]:행(row), x[1]:열(col), x[0]: 사이즈
+    # 정렬된 결과값 중 가장 가까이 있는 물고기로 가기
+    nx,ny,dist = cases[0]
+    ans+=dist # 1칸당 시간 1초
+
+    board[locx][locy], board[nx][ny] = 0,0 #먹었으니까 해당 위치 초기화
+    locx,locy = nx,ny # 먹은 물고기 좌표로 아기상어 이동
+
+    cnt+=1# 물고기를 먹었으니 먹은 물고기 갯수 추가
+
+    if cnt == size:
+        size+=1
+        cnt=0
+print(ans)
