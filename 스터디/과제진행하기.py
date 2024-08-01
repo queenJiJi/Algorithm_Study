@@ -24,8 +24,10 @@ def solution(plans):
   answer.append(plans[-1][0]) # 마지막 과목은 어짜피 이때까지 오면 끝낼때까지 해줘야하니 answer에 넣어주기
 
   for i in range(len(stack)): # stack에 남아있는 것들 처리
-    answer.append(stack[i*-1][0]) # 이렇게하면 역순으로 붙음 
+    answer.append(stack[~i][0]) # 이렇게하면 역순으로 붙음 
 
   return answer
 
+print(solution([["korean", "11:40", "30"], ["english", "12:10", "20"], ["math", "12:30", "40"]]))
+print(solution([["science", "12:40", "50"], ["music", "12:20", "40"], ["history", "14:00", "30"], ["computer", "12:30", "100"]]))
 print(solution([["aaa", "12:00", "20"], ["bbb", "12:10", "30"], ["ccc", "12:40", "10"]]))
