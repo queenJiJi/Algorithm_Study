@@ -18,6 +18,7 @@ def bfs(graph, start, end ,n ):
 def solution(n,wires):
   answer = float('inf')
   graph = defaultdict(list)
+  test =[]
 
   for v1,v2 in wires:
     graph[v1].append(v2)
@@ -27,11 +28,12 @@ def solution(n,wires):
     cutted_part = bfs(graph,start,end, n)
     print(cutted_part)
     rest_part = n-cutted_part
+    test.append(abs(cutted_part-rest_part))
     answer = min(answer, abs(cutted_part-rest_part))
-
+  print(test)
   return answer
 
 
 print(solution(9,[[1,3],[2,3],[3,4],[4,5],[4,6],[4,7],[7,8],[7,9]]))
-print(solution(4,	[[1,2],[2,3],[3,4]]))
-print(solution(7	,[[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
+# print(solution(4,	[[1,2],[2,3],[3,4]]))
+# print(solution(7	,[[1,2],[2,7],[3,7],[3,4],[4,5],[6,7]]))
